@@ -12,6 +12,41 @@ function close_mysqli ($link) {
     return mysqli_close($link);
 }
 
+function count_table ($table_name) {
+    $link = connect_mysqli();
+
+    $query = "SELECT COUNT(*) as count FROM {$table_name}";
+
+    $run = $link->query($query);
+    $row = mysqli_fetch_assoc($run);
+
+    mysqli_close($link);
+
+    return isset($row['count']) ? $row['count'] : 0;
+}
+
+function paginate ($table_name, $limit = 5) {
+    $count = count_table($table_name);
+
+    return round($count / 5);
+}
+
+function list_table ($table_name, $limit = 5, $page = 0) {
+    $link = connect_mysqli();
+
+    $page = $page > 1 ? $page - 1 : $page;
+
+    $offset = ($page * $limit) === 5 ? 0 : ($page) * $limit;
+    $query = "SELECT * FROM {$table_name} LIMIT {$offset},{$limit}";
+
+    $run = $link->query($query);
+    $rows = mysqli_fetch_all($run, MYSQLI_ASSOC);
+
+    mysqli_close($link);
+
+    return $rows;
+}
+
 function user_exists ($email) {
     $link = connect_mysqli();
 
