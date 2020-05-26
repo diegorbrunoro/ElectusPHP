@@ -4,6 +4,8 @@
 
 <?php include 'layout/head.php'?>
 
+<?php if (is_authenticated()) header('Location: cadastro_usuario.php'); ?>
+
 <div class="global-container">
     <div class="card login-form">
         <div class="card-body">

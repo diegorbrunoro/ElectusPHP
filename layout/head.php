@@ -1,3 +1,4 @@
+<?php include "helpers/auth.php"; ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
