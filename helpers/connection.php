@@ -40,7 +40,10 @@ function list_table ($table_name, $limit = 5, $page = 0) {
     $query = "SELECT * FROM {$table_name} LIMIT {$offset},{$limit}";
 
     $run = $link->query($query);
-    $rows = mysqli_fetch_all($run, MYSQLI_ASSOC);
+    $rows = [];
+    while($row = $run->fetch_assoc()) {
+        $rows[] = $row;
+    }
 
     mysqli_close($link);
 
