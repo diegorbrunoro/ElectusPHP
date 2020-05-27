@@ -26,6 +26,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/cadastro_usuario.php">Cadastrar Usuário</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sair.php">Sair</a>
+            </li>
         </ul>
     </nav>
 <?php } ?>
