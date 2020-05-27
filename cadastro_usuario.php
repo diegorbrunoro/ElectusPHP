@@ -1,21 +1,31 @@
 <?php
+require 'Entities/BrunoroUsuario.php';
 require 'middleware/middleware_login.php';
-require 'helpers/connection.php';
+//require 'helpers/connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = $_POST["name"];
-    $address = $_POST["address"];
-    $mother_name = $_POST["mother_name"];
-    $daddy_name = $_POST["daddy_name"];
-    $country = $_POST["country"];
-    $city = $_POST["city"];
-    $state = $_POST["state"];
-    $civil_state = $_POST['civil_state'];
-    $instruction = $_POST['instruction'];
+    $user = new BrunoroUsuario([
+        'usu_nome' => $_POST["name"],
+        'usu_endereco' => $_POST["address"],
+        'usu_nmae' => $_POST["mother_name"],
+        'usu_cargo' => 'Cargo',
+        'usu_centro_custo' => 'Centro Custo',
+        'usu_unidade' => 'Unidade',
+        'usu_gintrucao' => 'Gin',
+        'usu_npai' => $_POST["daddy_name"],
+        'usu_pais' => $_POST["country"],
+        'usu_estado' => $_POST["state"],
+        'usu_cidade' => $_POST["city"],
+        'usu_uf' => $_POST["state"],
+        'usu_ecivil' => $_POST['civil_state'],
+        'usu_ginstrucao' => $_POST['instruction'],
+        'usu_id_unidade' => 'Unidade',
+        'usu_senha' => 'Pass',
+        'usu_login' => 'Login'
+    ]);
 
-    $status = create_user($name, $address, $mother_name, $daddy_name, $country, $state, $civil_state, $instruction);
-    if ($status) {
+    if ($user->save()) {
         flash_success('Cadastro efetuado com sucesso');
     } else {
         flash_error('Não foi possível efetuar o cadastro, tente novamente');
