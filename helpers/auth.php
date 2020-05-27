@@ -24,7 +24,11 @@ if (!function_exists('url')) {
     }
 }
 
-die(url());
+if (!function_exists('link_to')) {
+    function link_to ($to = "") {
+        return url() . $to;
+    }
+}
 
 if (!function_exists('password')) {
     function password($string) {

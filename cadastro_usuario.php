@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include 'layout/head.php'?>
 
-<form method="POST" action="cadastro_usuario.php">
+<form method="POST" action="<?=link_to('cadastro_usuario.php')?>">
     <div class="container py-3">
         <div class="row">
             <div class="col-md-12">

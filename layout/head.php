@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="css/estilo.css" rel="stylesheet">
+    <link href="<?=link_to('css/estilo.css')?>" rel="stylesheet">
 </head>
 <body>
 
@@ -21,13 +21,13 @@
         <!-- Links -->
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/lista_usuarios.php">Listar Usuários</a>
+                <a class="nav-link" href="<?=link_to('lista_usuarios.php')?>">Listar Usuários</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/cadastro_usuario.php">Cadastrar Usuário</a>
+                <a class="nav-link" href="<?=link_to('cadastro_usuario.php')?>">Cadastrar Usuário</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sair.php">Sair</a>
+                <a class="nav-link" href="<?=link_to('sair.php')?>">Sair</a>
             </li>
         </ul>
     </nav>

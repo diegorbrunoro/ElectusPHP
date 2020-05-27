@@ -4,7 +4,7 @@
 
 <?php include 'layout/head.php'?>
 
-<?php if (is_authenticated()) header('Location: cadastro_usuario.php'); ?>
+<?php if (is_authenticated()) header('Location: ' . link_to('cadastro_usuario.php')); ?>
 
 <div class="global-container">
     <div class="card login-form">
@@ -14,7 +14,7 @@
                 <?=show_alerts()?>
                 <!--
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
-                <form method="post" action="login.php">
+                <form method="post" action="<?=link_to('login.php')?>">
                     <!-- to error: add class "has-danger" -->
                     <div class="form-group">
                         <label for="email">E-mail</label>

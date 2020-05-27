@@ -10,11 +10,11 @@ if (!$auth) {
     flash('email', 'Ops');
     flash('password', 'Ops');
 
-    header('Location: /');
+    header('Location: ' . link_to());
 } else {
     $_SESSION = $auth;
 
     flash_success('Bem-vindo');
 
-    header('Location: /cadastro_usuario.php');
+    header('Location: ' . link_to('cadastro_usuario.php'));
 }
