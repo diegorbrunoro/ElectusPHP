@@ -11,6 +11,11 @@ require 'helpers/connection.php';
 <div class="container py-3">
     <div class="row">
         <div class="col-md-12">
+            <div class="row pb-4">
+                <div class="col-lg-12">
+                    <?=show_alerts()?>
+                </div>
+            </div>
             <div class="card card-outline-secondary">
                 <div class="card-header">
                     <h3 class="mb-0">Listagem</h3>
@@ -30,6 +35,7 @@ require 'helpers/connection.php';
                             <th>Estado Cívil</th>
                             <th>Grau Instrução</th>
                             <th>Unidade</th>
+                            <th>#</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,6 +52,11 @@ require 'helpers/connection.php';
                                     <td><?=$user['usu_ecivil']?></td>
                                     <td><?=$user['usu_ginstrucao']?></td>
                                     <td><?=$user['usu_id_unidade']?></td>
+                                    <td>
+                                        <a href="<?=link_to(sprintf('deletar_usuario.php?id=%s', $user['id_usuario']))?>" class="btn btn-danger btn-sm">
+                                            Remover
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>

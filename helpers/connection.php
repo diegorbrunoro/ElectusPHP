@@ -65,6 +65,21 @@ function user_exists ($email) {
     return $row;
 }
 
+function user_exists_by_id ($id) {
+    $link = connect_mysqli();
+
+    $query = sprintf("SELECT * FROM `brunoro_usuario` WHERE `id_usuario` = '%s'",
+        $id
+    );
+
+    $run = $link->query($query);
+    $row = mysqli_fetch_assoc($run);
+
+    mysqli_close($link);
+
+    return $row;
+}
+
 function create_user(
     $name,
     $address,
@@ -95,4 +110,23 @@ function create_user(
     close_mysqli($link);
 
     return $status;
+}
+
+if (!function_exists('remove_user')) {
+    function remove_user ($id) {
+
+        $user = user_exists_by_id($id);
+        if (!$user)
+            return false;
+
+        $link = connect_mysqli();
+
+        $query = sprintf('DELETE FROM `brunoro_usuario` WHERE `id_usuario` = "%s"', $id);
+
+        $status = $link->query($query);
+
+        close_mysqli($link);
+
+        return $status;
+    }
 }
