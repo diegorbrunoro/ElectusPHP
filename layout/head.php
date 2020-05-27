@@ -1,4 +1,11 @@
 <?php include "helpers/auth.php"; ?>
+
+<?php
+if (isset($_GET['dev'])) {
+    phpinfo();
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -6,13 +6,6 @@
 
 <?php if (is_authenticated()) header('Location: ' . link_to('cadastro_usuario.php')); ?>
 
-<?php
-if (isset($_GET['dev'])) {
-    phpinfo();
-    exit;
-}
-?>
-
 <div class="global-container">
     <div class="card login-form">
         <div class="card-body">
