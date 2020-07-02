@@ -3,7 +3,7 @@ require 'Entities/BrunoroUsuario.php';
 require 'middleware/middleware_login.php';
 //require 'helpers/connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cadastro_usuario'])) {
 
     $user = new BrunoroUsuario([
         'usu_nome' => $_POST["name"],
@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'usu_ginstrucao' => $_POST['instruction'],
         'usu_id_unidade' => 'Unidade',
         'usu_senha' => 'Pass',
-        'usu_login' => 'Login'
+        'usu_login' => 'Login',
+        'usu_candidato' => $_POST['usu_candidato']
     ]);
 
     if ($user->save()) {
@@ -101,11 +102,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label for="ginstrucao">Escolaridade</label>
                                 <input class="form-control" id="ginstrucao" type="text" name="instruction" />
                             </div>
+
+                            <div class="col-sm-5 pb-3">
+                                <label for="uf">Candidato</label>
+                                <select class="form-control custom-select" id="uf" name="state">
+                                    <option value="1">
+                                        Sim
+                                    </option>
+                                    <option value="0" selected>
+                                        Não
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="float-right">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" name="cadastro_usuario" class="btn btn-primary">
                                 Cadastrar usuário
                             </button>
                         </div>

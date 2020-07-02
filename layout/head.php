@@ -1,4 +1,5 @@
 <?php include "helpers/auth.php"; ?>
+<?php require_once "Entities/BrunoroUsuario.php"; ?>
 
 <?php
 if (isset($_GET['dev'])) {
@@ -19,6 +20,21 @@ if (isset($_GET['dev'])) {
 <body>
 
 <?php if (is_authenticated()) { ?>
+
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['quero_ser_candidato'])) {
+                $bu = new BrunoroUsuario();
+
+                if ($bu->jaECandidato($_SESSION['id_usuario'])) {
+                    flash_error('Você já é candidato');
+                } else {
+                    $bu->virarCandidato();
+                }
+            }
+        }
+    ?>
+
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand -->
         <a class="navbar-brand" href="#">
@@ -32,6 +48,9 @@ if (isset($_GET['dev'])) {
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?=link_to('cadastro_usuario.php')?>">Cadastrar Usuário</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?=link_to('votacao.php')?>">Votar</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?=link_to('sair.php')?>">Sair</a>

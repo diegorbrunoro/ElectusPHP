@@ -50,7 +50,7 @@ require 'helpers/connection.php';
                                     <td><?=$user['usu_uf']?></td>
                                     <td><?=$user['usu_cidade']?></td>
                                     <td><?=$user['usu_ecivil']?></td>
-                                    <td><?=$user['usu_ginstrucao']?></td>
+                                    <td><?=isset($user['usu_ginstrucao']) ? $user['usu_ginstrucao'] : ''?></td>
                                     <td><?=$user['usu_id_unidade']?></td>
                                     <td>
                                         <a href="<?=link_to(sprintf('deletar_usuario.php?id=%s', $user['id_usuario']))?>" class="btn btn-danger btn-sm">

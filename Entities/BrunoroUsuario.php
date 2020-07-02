@@ -1,5 +1,5 @@
 <?php
-include 'core/PDOConnection.php';
+require_once 'core/PDOConnection.php';
 
 class BrunoroUsuario extends PDOConnection
 {
@@ -34,6 +34,84 @@ class BrunoroUsuario extends PDOConnection
     {
         parent::__construct();
         if ($fields) $this->fillableManage = $fields;
+    }
+
+    public function candidatos()
+    {
+        $this->prepare(sprintf(
+            'SELECT * FROM `%s` WHERE usu_candidato = 1',
+            $this->getTableName()
+        ))->execute();
+
+        return $this->statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function nao_candidatos()
+    {
+        $this->prepare(sprintf(
+            'SELECT * FROM `%s` WHERE usu_candidato = 0',
+            $this->getTableName()
+        ))->execute();
+
+        return $this->statement->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function virarCandidato()
+    {
+        $this->prepare(sprintf(
+            'UPDATE `%s` SET `usu_candidato` = 1 WHERE id_usuario = :id_usuario',
+            $this->getTableName()
+        ));
+
+        $this->statement->bindValue(':id_usuario', $_SESSION['id_usuario']);
+
+        return $this->statement->execute();
+    }
+
+    public function jaECandidato($id_usuario)
+    {
+        $this->prepare(sprintf(
+            'SELECT * FROM `%s` WHERE id_usuario = :id_usuario',
+            $this->getTableName()
+        ));
+
+        $this->statement->bindValue(':id_usuario', $id_usuario);
+        $this->statement->execute();
+
+        return $this->statement->rowCount() > 0;
+    }
+
+    public function contadorParaOGrafico($id_usuario)
+    {
+        $this->prepare(sprintf(
+            'SELECT COUNT(id) as count FROM `%s` WHERE id_candidato = :id_usuario',
+            'brunoro_votacao'
+        ));
+
+        $this->statement->bindValue(':id_usuario', $id_usuario);
+        $this->statement->execute();
+
+        $fetch = $this->statement->fetch();
+
+        return isset($fetch['count']) ? $fetch['count'] : 0;
+    }
+
+    public function candidatos_chart()
+    {
+        $labels = [];
+        $colors = [];
+        $count = [];
+        $candidatos = $this->candidatos();
+        foreach ($candidatos as $candidato) {
+            $labels[] = $candidato->usu_nome;
+            $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+            $count[] = $this->contadorParaOGrafico($candidato->id_usuario);
+        }
+        return [
+            'labels' => json_encode($labels),
+            'counts' => json_encode($count),
+            'colors' => json_encode($colors)
+        ];
     }
 
 }

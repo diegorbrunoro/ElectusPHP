@@ -11,12 +11,48 @@ class PDOConnection {
 
     protected $statement;
 
+    private $where = [];
+
     public $fillableManage;
 
     public function __construct()
     {
         $this->setTableName($this->tableName);
         $this->setConnect(new PDO('mysql:host=140.238.181.93;dbname=fdb', 'fdb', 'fdb'));
+    }
+
+    /**
+     * @param $key
+     * @param $condition
+     * @param $value
+     */
+    public function setWhere($key, $condition, $value)
+    {
+        $this->where[] = [
+            'key' => $key,
+            'condition' => $condition,
+            'value' => $value
+        ];
+
+        return $this;
+    }
+
+    public function getWhere()
+    {
+        $where = "WHERE";
+        foreach ($this->where as $w) {
+            $where .= " $w[key] $w[condition] :$w[key]";
+        }
+
+        return $where;
+    }
+
+    public function prepareWhere()
+    {
+        foreach ($this->where as $w) {
+            $this->statement->bindValue(":$w[key]", $w['value']);
+        }
+        return $this;
     }
 
     public function setTableName($tableName)
@@ -118,6 +154,27 @@ class PDOConnection {
                 ->bindParams()
                 ->execute();
             return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function all()
+    {
+        try {
+
+            $query = sprintf('SELECT * FROM `%s` %s',
+                $this->getTableName(),
+                $this->getWhere()
+            );
+
+            $st = $this->prepare($query);
+
+            $this->prepareWhere();
+
+            $st->execute();
+
+            return $this->statement->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             return false;
         }
